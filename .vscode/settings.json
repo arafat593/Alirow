@@ -1,0 +1,19 @@
+{
+  "dart.flutterSdkPath": ".fvm/versions/3.41.6",
+  "cSpell.words": [
+    "APPL",
+    "BITCODE",
+    "COCOAPODS",
+    "dartobservatory",
+    "genkey",
+    "genkeypair",
+    "keyalg",
+    "keysize",
+    "keytool",
+    "podfile",
+    "podhelper",
+    "Riverpod",
+    "Tuhin",
+    "xcconfig"
+  ]
+}
