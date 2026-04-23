@@ -9,13 +9,26 @@ import 'package:flutter_riverpod_template/utils/gap.dart';
 import 'package:flutter_riverpod_template/widgets/app_image/app_image.dart';
 import 'package:flutter_riverpod_template/widgets/buttons/app_button.dart';
 import 'package:flutter_riverpod_template/widgets/texts/app_text.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProductDetails extends ConsumerWidget {
   const ProductDetails({super.key});
 
+  Future<void> openWhatsApp({required String message}) async {
+    final url = Uri.parse(
+      "https://wa.me/8801722877869?text=${Uri.encodeComponent(message)}",
+    );
+
+    try {
+      await launchUrl(url, mode: LaunchMode.externalApplication);
+    } catch (e) {
+      debugPrint("Could not launch WhatsApp: \$e");
+    }
+  }
+
   @override
-  Widget build(BuildContext context,WidgetRef ref) {
-    final selectImage=ref.watch(selectItem);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectImage = ref.watch(selectItem);
     return Scaffold(
       backgroundColor: AppColors.instance.white50,
       body: SafeArea(
@@ -78,16 +91,22 @@ class ProductDetails extends ConsumerWidget {
                                       vertical: 5,
                                     ),
                                     child: GestureDetector(
-                                      onTap: (){
-                                        ref.read(selectItem.notifier).getItem(index);
+                                      onTap: () {
+                                        ref
+                                            .read(selectItem.notifier)
+                                            .getItem(index);
                                       },
                                       child: DecoratedBox(
                                         decoration: BoxDecoration(
                                           border: Border.all(
-                                            color:selectImage == index ? AppColors.instance.primary:Colors.transparent,
+                                            color: selectImage == index
+                                                ? AppColors.instance.primary
+                                                : Colors.transparent,
                                             width: 3,
                                           ),
-                                          borderRadius: BorderRadius.circular(8),
+                                          borderRadius: BorderRadius.circular(
+                                            8,
+                                          ),
                                         ),
                                         child: Padding(
                                           padding: const EdgeInsets.all(2),
@@ -151,6 +170,25 @@ class ProductDetails extends ConsumerWidget {
                     ),
                     Gap(height: 10),
                     AppButton(
+                      onTap: () async {
+                        // Create a well-formatted message with product details
+                        final String orderMessage = '''
+Hello Admin, I would like to order this product:
+
+*Product Details:*
+🛍️ *Name:* Maroon Color Hoodie
+💰 *Price:* \$80
+📝 *Description:* A premium selection of fresh Atlantic salmon, tuna, and yellowtail sashimi, paired with our signature dragon rolls and nigiri...
+
+🖼️ *Product Image:*
+https://images.pexels.com/photos/29345066/pexels-photo-29345066.jpeg?_gl=1*10oj6yy*_ga*MTUzMTc0Mzc0NC4xNzcyNzcyMjYy*_ga_8JE65Q40S6*czE3NzY3NTMzNDUkbzMkZzEkdDE3NzY3NTMzNTAkajU1JGwwJGgw
+
+Please let me know the next steps for payment and delivery!
+''';
+
+                        // Open WhatsApp directly
+                        await openWhatsApp(message: orderMessage);
+                      },
                       height: 43,
                       borderRadius: BorderRadius.circular(18),
                       child: Row(
