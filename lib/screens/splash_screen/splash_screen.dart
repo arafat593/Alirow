@@ -21,7 +21,9 @@ class SplashScreen extends ConsumerWidget {
         slivers: [
           SliverToBoxAdapter(child: Gap(height: 40)),
           SliverToBoxAdapter(
-            child: AppImage(path: AppAssertsImagePath.instance.flagIcon),
+            child: AppImage(
+
+                path: AppAssertsImagePath.instance.flagIcon),
           ),
           SliverToBoxAdapter(
             child: Padding(
@@ -46,6 +48,8 @@ class SplashScreen extends ConsumerWidget {
               textAlign: TextAlign.center,
             ),
           ),
+          SliverToBoxAdapter(child: Gap(height: 80)),
+          SliverToBoxAdapter(child: Center(child: CircularProgressIndicator(color: AppColors.instance.primary,)),),
         ],
       ),
     );
