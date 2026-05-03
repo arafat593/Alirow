@@ -5,20 +5,14 @@ class AppApiUrl {
   AppApiUrl._privateConstructor();
   static final AppApiUrl _instance = AppApiUrl._privateConstructor();
   static AppApiUrl get instance => _instance;
-  //////////////  app base api end point
+
   static final String domain = _getDomain();
   static final String socket = _getDomain();
   final String baseUrl = "$domain/api/v1";
 
-  //////////////////////////////////  base
+  // auth
   String refreshToken = "/refreshToken";
   String userProfile = "/user/profile";
-  String about = "/rule/about";
-  String privacyPolicy = "/rule/privacy-policy";
-  String termsAndConditions = "/rule/terms-and-conditions";
-  String faq = "/faq";
-  String notification = "/notification";
-  ////////////
   String login = "/login";
   String authDeleteAccount = "/authDeleteAccount";
   String user = "/user";
@@ -28,10 +22,22 @@ class AppApiUrl {
   String authForgotPassword = "/authForgotPassword";
   String authVerifyEmail = "/authVerifyEmail";
   String authResetPassword = "/authResetPassword";
+
+  // content
+  String about = "/pages/type/ABOUT";
+  String privacyPolicy = "/pages/type/PRIVACY_POLICY";
+  String termsAndConditions = "/pages/type/TERMS_CONDITIONS";
+  String faq = "/pages/faqs"; 
+  String notification = "/notification";
+
+  // shop
+  String products = "/products";
+  String categories = "/categories";
 }
 
 String _getDomain() {
-  const String liveServer = "http://54.176.228.142:6005";
+  const String liveServer =
+      "http://yvx4wx0kqox6pyo91wsslyu8.147.93.107.217.sslip.io";
   const String localServer = "http://10.10.7.8:6008";
 
   try {

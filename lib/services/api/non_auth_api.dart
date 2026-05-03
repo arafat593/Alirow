@@ -17,6 +17,7 @@ class NonAuthApi {
           options.baseUrl = AppApiUrl.instance.baseUrl;
           options.contentType = 'application/json';
           options.headers["Accept"] = "application/json";
+          options.headers["x-viewer-id"] = "00000000-0000-0000-0000-000000000000";
           return handler.next(options); // Continue request
         },
         onError: (error, handler) async {

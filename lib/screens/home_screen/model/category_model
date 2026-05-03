@@ -1,0 +1,31 @@
+class CategoryModel {
+  final String id;
+  final String name;
+  final String slug;
+  final String image;
+  final bool isFeatured;
+  final String createdAt;
+  final String updatedAt;
+
+  const CategoryModel({
+    required this.id,
+    required this.name,
+    required this.slug,
+    required this.image,
+    required this.isFeatured,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
+  factory CategoryModel.fromJson(Map<String, dynamic> json) {
+    return CategoryModel(
+      id: json['id']?.toString() ?? '',
+      name: json['name']?.toString() ?? '',
+      slug: json['slug']?.toString() ?? '',
+      image: json['image']?.toString() ?? '',
+      isFeatured: json['isFeatured'] as bool? ?? false,
+      createdAt: json['createdAt']?.toString() ?? '',
+      updatedAt: json['updatedAt']?.toString() ?? '',
+    );
+  }
+}

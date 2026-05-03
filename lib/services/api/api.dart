@@ -37,6 +37,8 @@ class AppApi {
           if (token.isNotEmpty) {
             options.headers["Authorization"] = "Bearer $token";
           }
+          
+          options.headers["x-viewer-id"] = "00000000-0000-0000-0000-000000000000";
 
           return handler.next(options); // Continue request
         },

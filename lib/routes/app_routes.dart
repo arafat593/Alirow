@@ -32,9 +32,9 @@ class AppRoutes {
     initialLocation: AppRoutesKey.instance.initial,
     routes: [
       GoRoute(
-          path: AppRoutesKey.instance.initial,
-          name: AppRoutesKey.instance.splash,
-          builder: (context, state) => SplashScreen(),
+        path: AppRoutesKey.instance.initial,
+        name: AppRoutesKey.instance.splash,
+        builder: (context, state) => SplashScreen(),
       ),
       GoRoute(
         path: "/${AppRoutesKey.instance.onboardingScreen}",
@@ -54,7 +54,8 @@ class AppRoutes {
       GoRoute(
         path: "/${AppRoutesKey.instance.productDetails}",
         name: AppRoutesKey.instance.productDetails,
-        builder: (context, state) => ProductDetails(),
+        builder: (context, state) =>
+            ProductDetails(productId: state.extra as String?),
       ),
       GoRoute(
         path: "/${AppRoutesKey.instance.privacyPolicyScreen}",
@@ -93,7 +94,8 @@ class AppRoutes {
       if (asyncStatus.hasError) return "/${AppRoutesKey.instance.errorScreen}";
 
       final isOnline = asyncStatus.value ?? true;
-      final goingToNoInternet = state.name == AppRoutesKey.instance.noInternetScreen;
+      final goingToNoInternet =
+          state.name == AppRoutesKey.instance.noInternetScreen;
 
       if (!isOnline && !goingToNoInternet) {
         return "/${AppRoutesKey.instance.noInternetScreen}";
@@ -126,7 +128,13 @@ class AppRoutes {
     String? fragment,
   }) {
     try {
-      router.goNamed(value, pathParameters: pathParameters, extra: extra, fragment: fragment, queryParameters: queryParameters);
+      router.goNamed(
+        value,
+        pathParameters: pathParameters,
+        extra: extra,
+        fragment: fragment,
+        queryParameters: queryParameters,
+      );
     } catch (e) {
       errorLog("goNamed", e);
     }
@@ -147,7 +155,12 @@ class AppRoutes {
     Object? extra,
   }) {
     try {
-      router.replaceNamed(value, pathParameters: pathParameters, extra: extra, queryParameters: queryParameters);
+      router.replaceNamed(
+        value,
+        pathParameters: pathParameters,
+        extra: extra,
+        queryParameters: queryParameters,
+      );
     } catch (e) {
       errorLog("replaceNamed", e);
     }
@@ -173,7 +186,12 @@ class AppRoutes {
     Object? extra,
   }) {
     try {
-      router.pushNamed(value, pathParameters: pathParameters, extra: extra, queryParameters: queryParameters);
+      router.pushNamed(
+        value,
+        pathParameters: pathParameters,
+        extra: extra,
+        queryParameters: queryParameters,
+      );
     } catch (e) {
       errorLog("pushNamed", e);
     }
@@ -194,7 +212,12 @@ class AppRoutes {
     Object? extra,
   }) {
     try {
-      router.pushReplacementNamed(value, pathParameters: pathParameters, extra: extra, queryParameters: queryParameters);
+      router.pushReplacementNamed(
+        value,
+        pathParameters: pathParameters,
+        extra: extra,
+        queryParameters: queryParameters,
+      );
     } catch (e) {
       errorLog("pushReplacementNamed", e);
     }

@@ -21,7 +21,11 @@ class BaseRepository {
         if (response["data"] != null && response["data"] is Map) {
           var data = response["data"];
           if (data["content"] != null && data["content"] is String) {
-            return data["content"].toString()..replaceAll('white-space:pre-wrap;', '').replaceAll('\u00A0', ' ').replaceAll(RegExp(r'\s+'), ' ').trim();
+            return data["content"].toString()
+              ..replaceAll('white-space:pre-wrap;', '')
+                  .replaceAll('\u00A0', ' ')
+                  .replaceAll(RegExp(r'\s+'), ' ')
+                  .trim();
           }
         }
       }
@@ -38,7 +42,11 @@ class BaseRepository {
         if (response["data"] != null && response["data"] is Map) {
           var data = response["data"];
           if (data["content"] != null && data["content"] is String) {
-            return data["content"].toString()..replaceAll('white-space:pre-wrap;', '').replaceAll('\u00A0', ' ').replaceAll(RegExp(r'\s+'), ' ').trim();
+            return data["content"].toString()
+              ..replaceAll('white-space:pre-wrap;', '')
+                  .replaceAll('\u00A0', ' ')
+                  .replaceAll(RegExp(r'\s+'), ' ')
+                  .trim();
           }
         }
       }
@@ -55,7 +63,11 @@ class BaseRepository {
         if (response["data"] != null && response["data"] is Map) {
           var data = response["data"];
           if (data["content"] != null && data["content"] is String) {
-            return data["content"].toString()..replaceAll('white-space:pre-wrap;', '').replaceAll('\u00A0', ' ').replaceAll(RegExp(r'\s+'), ' ').trim();
+            return data["content"].toString()
+              ..replaceAll('white-space:pre-wrap;', '')
+                  .replaceAll('\u00A0', ' ')
+                  .replaceAll(RegExp(r'\s+'), ' ')
+                  .trim();
           }
         }
       }
