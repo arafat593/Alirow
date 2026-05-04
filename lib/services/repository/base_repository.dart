@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod_template/constant/app_api_url.dart';
-import 'package:flutter_riverpod_template/screens/base_screen/faq_screen/models/f_a_q_screen_data_model.dart';
 import 'package:flutter_riverpod_template/services/api/api_services.dart';
 import 'package:flutter_riverpod_template/utils/app_log.dart';
 
@@ -77,20 +76,17 @@ class BaseRepository {
     return "";
   }
 
-  Future<List<FAQScreenDataModel>> getAllFaq() async {
-    List<FAQScreenDataModel> listOfFaqData = [];
+  Future<List<Map<String, dynamic>>> getFaqs() async {
     try {
       var response = await _apiServices.getServices(_api.faq);
       if (response != null) {
-        if (response["data"] is List) {
-          for (var element in response["data"]) {
-            listOfFaqData.add(FAQScreenDataModel.fromJson(element));
-          }
+        if (response["data"] != null && response["data"] is List) {
+          return List<Map<String, dynamic>>.from(response["data"]);
         }
       }
     } catch (e) {
-      errorLog("getAllFaq", e);
+      errorLog("getFaqs repo", e);
     }
-    return listOfFaqData;
+    return [];
   }
 }

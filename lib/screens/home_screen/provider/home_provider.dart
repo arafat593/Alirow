@@ -8,38 +8,51 @@ import 'package:flutter_riverpod_template/screens/product_details/repository/pro
 class HomeState {
   final List<CategoryModel> categories;
   final List<ProductModel> products;
+  final List<ProductModel> allProducts;
   final bool isCategoryLoading;
   final bool isProductLoading;
   final String? selectedCategoryId; // null = "All"
   final int selectedCategoryIndex; // 0 = "All"
   final String searchQuery;
+  final double minPrice;
+  final double maxPrice;
+  final String sortBy;
   final String? error;
 
   const HomeState({
     this.categories = const [],
     this.products = const [],
+    this.allProducts = const [],
     this.isCategoryLoading = false,
     this.isProductLoading = false,
     this.selectedCategoryId,
     this.selectedCategoryIndex = 0,
     this.searchQuery = '',
+    this.minPrice = 0,
+    this.maxPrice = 5000,
+    this.sortBy = 'Popular',
     this.error,
   });
 
   HomeState copyWith({
     List<CategoryModel>? categories,
     List<ProductModel>? products,
+    List<ProductModel>? allProducts,
     bool? isCategoryLoading,
     bool? isProductLoading,
     String? selectedCategoryId,
     bool clearCategoryId = false,
     int? selectedCategoryIndex,
     String? searchQuery,
+    double? minPrice,
+    double? maxPrice,
+    String? sortBy,
     String? error,
   }) {
     return HomeState(
       categories: categories ?? this.categories,
       products: products ?? this.products,
+      allProducts: allProducts ?? this.allProducts,
       isCategoryLoading: isCategoryLoading ?? this.isCategoryLoading,
       isProductLoading: isProductLoading ?? this.isProductLoading,
       selectedCategoryId: clearCategoryId
@@ -48,6 +61,9 @@ class HomeState {
       selectedCategoryIndex:
           selectedCategoryIndex ?? this.selectedCategoryIndex,
       searchQuery: searchQuery ?? this.searchQuery,
+      minPrice: minPrice ?? this.minPrice,
+      maxPrice: maxPrice ?? this.maxPrice,
+      sortBy: sortBy ?? this.sortBy,
       error: error,
     );
   }
@@ -79,7 +95,33 @@ class HomeNotifier extends StateNotifier<HomeState> {
       categoryId: state.selectedCategoryId,
       search: state.searchQuery.isEmpty ? null : state.searchQuery,
     );
-    state = state.copyWith(products: products, isProductLoading: false);
+    state = state.copyWith(allProducts: products);
+    _applyLocalFilter();
+  }
+
+  void _applyLocalFilter() {
+    List<ProductModel> filtered = List.from(state.allProducts);
+    
+    // Filter by price
+    filtered = filtered.where((p) {
+      return p.salePrice >= state.minPrice && p.salePrice <= state.maxPrice;
+    }).toList();
+    
+    // Sort
+    if (state.sortBy == 'Price: Low to High') {
+      filtered.sort((a, b) => a.salePrice.compareTo(b.salePrice));
+    } else if (state.sortBy == 'Price: High to Low') {
+      filtered.sort((a, b) => b.salePrice.compareTo(a.salePrice));
+    } else if (state.sortBy == 'Newest') {
+      filtered.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+    }
+
+    state = state.copyWith(products: filtered, isProductLoading: false);
+  }
+
+  void applyFilter(double minPrice, double maxPrice, String sortBy) {
+    state = state.copyWith(minPrice: minPrice, maxPrice: maxPrice, sortBy: sortBy);
+    _applyLocalFilter();
   }
 
   /// index 0 = "All", index 1..n = categories[index-1]

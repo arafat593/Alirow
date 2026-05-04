@@ -7,8 +7,15 @@ import 'package:flutter_riverpod_template/utils/gap.dart';
 import 'package:flutter_riverpod_template/widgets/buttons/icon_button_widget.dart';
 import 'package:flutter_riverpod_template/widgets/texts/app_text.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
+
+  @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+  String _selectedLanguage = "English";
 
   @override
   Widget build(BuildContext context) {
@@ -54,13 +61,44 @@ class SettingsScreen extends StatelessWidget {
                                 fontWeight: FontWeight.w600,
                               ),
                               Spacer(),
-                               AppText(
-                                  text: "English",
+                              DropdownButton<String>(
+                                value: _selectedLanguage,
+                                icon: Icon(Icons.keyboard_arrow_down, color: AppColors.instance.white50),
+                                dropdownColor: Colors.black,
+                                underline: const SizedBox(),
+                                style: TextStyle(
                                   color: AppColors.instance.white50,
                                   fontSize: AppSize.width(value: 16),
                                   fontWeight: FontWeight.w600,
+                                ),
+                                items: [
+                                  DropdownMenuItem(
+                                    value: "English",
+                                    child: AppText(
+                                      text: "English",
+                                      color: AppColors.instance.white50,
+                                      fontSize: AppSize.width(value: 16),
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: "Somali",
+                                    child: AppText(
+                                      text: "Somali",
+                                      color: AppColors.instance.white50,
+                                      fontSize: AppSize.width(value: 16),
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                                onChanged: (value) {
+                                  if (value != null) {
+                                    setState(() {
+                                      _selectedLanguage = value;
+                                    });
+                                  }
+                                },
                               ),
-                              Icon(Icons.keyboard_arrow_down),
                             ],
                           ),
                           Divider(

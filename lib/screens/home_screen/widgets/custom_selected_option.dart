@@ -16,23 +16,42 @@ class CustomSelectedOption extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 6.0),
       child: GestureDetector(
         onTap: onTap,
-        child: DecoratedBox(
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 250),
+          curve: Curves.easeInOut,
           decoration: BoxDecoration(
-            color: isSelected? AppColors.instance.primary:AppColors.instance.green20,
-            borderRadius: BorderRadius.circular(18),
+            color: isSelected ? AppColors.instance.primary : Colors.white,
+            borderRadius: BorderRadius.circular(25),
+            border: Border.all(
+              color: isSelected
+                  ? AppColors.instance.primary
+                  : AppColors.instance.green20,
+              width: 1.5,
+            ),
+            boxShadow: isSelected
+                ? [
+                    BoxShadow(
+                      color: AppColors.instance.primary.withOpacity(0.25),
+                      blurRadius: 8,
+                      offset: const Offset(0, 3),
+                    ),
+                  ]
+                : [],
           ),
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 0),
             child: Center(
               child: Text(
                 title,
                 style: TextStyle(
-                  fontSize: AppSize.width(value: 16),
-                  fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
-                  color: isSelected ? Colors.white : AppColors.instance.textBlack500,
+                  fontSize: AppSize.width(value: 15),
+                  fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+                  color: isSelected
+                      ? Colors.white
+                      : AppColors.instance.textBlack500,
                 ),
               ),
             ),

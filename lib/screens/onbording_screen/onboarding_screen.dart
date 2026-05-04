@@ -43,10 +43,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 onPageChanged: (index) {
                   ref.read(onboardingPageIndexProvider.notifier).state = index;
                 },
-                children: [
-                  _buildFirstPage(),
-                  _buildSecondPage(),
-                ],
+                children: [_buildFirstPage(), _buildSecondPage()],
               ),
             ),
             _buildBottomSection(currentPage),
@@ -60,9 +57,10 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   Widget _buildFirstPage() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: AppSize.width(value: 20)),
-      child: Column(
-        children: [
-          const Gap(height: 40),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            const Gap(height: 40),
           AppImage(
             path: AppAssertsImagePath.instance.onBoardingIcon,
             height: AppSize.height(value: 280),
@@ -111,21 +109,23 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           ),
         ],
       ),
+    ),
     );
   }
 
   Widget _buildSecondPage() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: AppSize.width(value: 20)),
-      child: Column(
-        children: [
-          const Gap(height: 36),
-          AppImage(
-            path: AppAssertsImagePath.instance.onBoardingIcon,
-            height: AppSize.height(value: 280),
-          ),
-         Spacer(),
-          AppText(
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            const Gap(height: 36),
+            AppImage(
+              path: AppAssertsImagePath.instance.onBoardingIcon,
+              height: AppSize.height(value: 280),
+            ),
+            const Gap(height: 20),
+            AppText(
             text: "Welcome to Dalsan \n Digital Market!",
             fontWeight: FontWeight.w600,
             fontSize: AppSize.width(value: 26),
@@ -171,7 +171,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
             ),
           ),
           const Gap(height: 13),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -206,7 +207,10 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(2, (index) => _buildDot(index, currentPage)),
+            children: List.generate(
+              2,
+              (index) => _buildDot(index, currentPage),
+            ),
           ),
           const Gap(height: 30),
           AppButton(

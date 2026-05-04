@@ -8,6 +8,7 @@ import 'package:flutter_riverpod_template/routes/app_routes_key.dart';
 import 'package:flutter_riverpod_template/screens/home_screen/provider/home_provider.dart';
 import 'package:flutter_riverpod_template/screens/home_screen/widgets/custom_selected_option.dart';
 import 'package:flutter_riverpod_template/screens/home_screen/widgets/product_container.dart';
+import 'package:flutter_riverpod_template/screens/home_screen/widgets/filter_bottom_sheet.dart';
 import 'package:flutter_riverpod_template/utils/app_size.dart';
 import 'package:flutter_riverpod_template/utils/gap.dart';
 import 'package:flutter_riverpod_template/widgets/app_image/app_image.dart';
@@ -46,89 +47,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     return Scaffold(
       backgroundColor: AppColors.instance.white50,
       body: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            // ── Header card ───────────────────────────────────────────────
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: AppSize.width(value: 16),
-                  vertical: AppSize.width(value: 18),
-                ),
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: AppColors.instance.grayContainer,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            AppImage(
-                              path: AppAssertsImagePath.instance.dalsanImage,
-                              width: AppSize.width(value: 90),
-                              height: AppSize.height(value: 40),
-                            ),
-                            const Spacer(),
-                            GestureDetector(
-                              onTap: () {
-                                AppRoutes.instance.pushNamed(
-                                  AppRoutesKey.instance.settingsScreen,
-                                );
-                              },
-                              child: AppImage(
-                                path: AppAssertsIconsPath.instance.drawer,
-                                width: 42,
-                                height: 42,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Gap(height: 30),
-                        TextField(
-                          controller: _searchController,
-                          onChanged: (value) =>
-                              ref.read(homeProvider.notifier).search(value),
-                          decoration: InputDecoration(
-                            hintText: "Search by Product Name",
-                            prefixIcon: const Icon(Icons.search),
-                            suffixIcon: state.searchQuery.isNotEmpty
-                                ? GestureDetector(
-                                    onTap: () {
-                                      _searchController.clear();
-                                      ref
-                                          .read(homeProvider.notifier)
-                                          .search('');
-                                    },
-                                    child: const Icon(Icons.close),
-                                  )
-                                : const Icon(Icons.drag_handle_sharp),
-                            filled: true,
-                            fillColor: AppColors.instance.dark2A,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: BorderSide.none,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-
-            // ── Sticky category bar ───────────────────────────────────────
-            SliverPersistentHeader(
-              pinned: true,
-              delegate: _StickyCategoryDelegate(
-                child: Container(
-                  color: AppColors.instance.white50,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 8,
+        child: RefreshIndicator(
+          onRefresh: () => ref
+              .read(homeProvider.notifier)
+              .init(), // Calling init() will refresh both categories and products, or we can use refresh() for products only. I'll use init() since they asked to "reload products" but a full refresh might be nicer.
+          child: CustomScrollView(
+            slivers: [
+              // ── Header card ───────────────────────────────────────────────
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: AppSize.width(value: 16),
+                    vertical: AppSize.width(value: 18),
                   ),
                   child: DecoratedBox(
                     decoration: BoxDecoration(
@@ -136,61 +66,147 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(14),
-                      child: SizedBox(
-                        height: 42,
-                        child: state.isCategoryLoading
-                            ? const Center(
-                                child: SizedBox(
-                                  height: 20,
-                                  width: 20,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                  ),
-                                ),
-                              )
-                            : ListView.builder(
-                                physics: const BouncingScrollPhysics(),
-                                scrollDirection: Axis.horizontal,
-                                itemCount: categoryLabels.length,
-                                itemBuilder: (context, index) {
-                                  return CustomSelectedOption(
-                                    title: categoryLabels[index],
-                                    isSelected:
-                                        state.selectedCategoryIndex == index,
-                                    onTap: () => ref
-                                        .read(homeProvider.notifier)
-                                        .selectCategory(index),
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              AppImage(
+                                path: AppAssertsImagePath.instance.dalsanImage,
+                                width: AppSize.width(value: 90),
+                                height: AppSize.height(value: 40),
+                              ),
+                              const Spacer(),
+                              GestureDetector(
+                                onTap: () {
+                                  AppRoutes.instance.pushNamed(
+                                    AppRoutesKey.instance.settingsScreen,
                                   );
                                 },
+                                child: AppImage(
+                                  path: AppAssertsIconsPath.instance.drawer,
+                                  width: 42,
+                                  height: 42,
+                                ),
                               ),
+                            ],
+                          ),
+                          Gap(height: 30),
+                          TextField(
+                            controller: _searchController,
+                            onChanged: (value) =>
+                                ref.read(homeProvider.notifier).search(value),
+                            decoration: InputDecoration(
+                              hintText: "Search by Product Name",
+                              prefixIcon: const Icon(Icons.search),
+                              suffixIcon: state.searchQuery.isNotEmpty
+                                  ? GestureDetector(
+                                      onTap: () {
+                                        _searchController.clear();
+                                        ref
+                                            .read(homeProvider.notifier)
+                                            .search('');
+                                      },
+                                      child: const Icon(Icons.close),
+                                    )
+                                  : GestureDetector(
+                                      onTap: () {
+                                        showModalBottomSheet(
+                                          context: context,
+                                          isScrollControlled: true,
+                                          backgroundColor: Colors.transparent,
+                                          builder: (context) => const FilterBottomSheet(),
+                                        );
+                                      },
+                                      child: const Icon(Icons.filter_alt_outlined),
+                                    ),
+                              filled: true,
+                              fillColor: AppColors.instance.dark2A,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
 
-            // ── Product grid ──────────────────────────────────────────────
-            SliverPadding(
-              padding: EdgeInsets.symmetric(
-                horizontal: AppSize.width(value: 16),
-                vertical: AppSize.width(value: 18),
-              ),
-              sliver: SliverToBoxAdapter(
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: AppColors.instance.grayContainer,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: _buildGrid(state),
+              // ── Sticky category bar ───────────────────────────────────────
+              SliverPersistentHeader(
+                pinned: true,
+                delegate: _StickyCategoryDelegate(
+                  child: Container(
+                    color: AppColors.instance.white50,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: AppColors.instance.grayContainer,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(14),
+                        child: SizedBox(
+                          height: 42,
+                          child: state.isCategoryLoading
+                              ? const Center(
+                                  child: SizedBox(
+                                    height: 20,
+                                    width: 20,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                    ),
+                                  ),
+                                )
+                              : ListView.builder(
+                                  physics: const BouncingScrollPhysics(),
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: categoryLabels.length,
+                                  itemBuilder: (context, index) {
+                                    return CustomSelectedOption(
+                                      title: categoryLabels[index],
+                                      isSelected:
+                                          state.selectedCategoryIndex == index,
+                                      onTap: () => ref
+                                          .read(homeProvider.notifier)
+                                          .selectCategory(index),
+                                    );
+                                  },
+                                ),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+
+              // ── Product grid ──────────────────────────────────────────────
+              SliverPadding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: AppSize.width(value: 16),
+                  vertical: AppSize.width(value: 18),
+                ),
+                sliver: SliverToBoxAdapter(
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: AppColors.instance.grayContainer,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: _buildGrid(state),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
