@@ -14,7 +14,6 @@ class Faq extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final faqAsyncValue = ref.watch(faqProvider);
-
     return Scaffold(
       backgroundColor: AppColors.instance.white50,
       body: SafeArea(
@@ -38,6 +37,7 @@ class Faq extends ConsumerWidget {
                       text: "FAQ",
                       fontSize: AppSize.width(value: 32),
                       fontWeight: FontWeight.bold,
+                      isDynamic: true,
                     ),
                   ],
                 ),
@@ -46,7 +46,9 @@ class Faq extends ConsumerWidget {
 
             // Main FAQ Container
             SliverPadding(
-              padding: EdgeInsets.symmetric(horizontal: AppSize.width(value: 20)),
+              padding: EdgeInsets.symmetric(
+                horizontal: AppSize.width(value: 20),
+              ),
               sliver: SliverToBoxAdapter(
                 child: Container(
                   padding: EdgeInsets.all(AppSize.width(value: 16)),
@@ -62,27 +64,36 @@ class Faq extends ConsumerWidget {
                         fontSize: AppSize.width(value: 24),
                         fontWeight: FontWeight.bold,
                         height: 1.2,
+                        isDynamic: true,
                       ),
                       const Gap(height: 20),
                       faqAsyncValue.when(
                         data: (faqData) {
                           if (faqData.isEmpty) {
-                            return const Center(child: Text("No FAQs available."));
+                            return const Center(
+                              child: Text("No FAQs available."),
+                            );
                           }
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: faqData.map((item) {
                               return Padding(
-                                padding: EdgeInsets.only(bottom: AppSize.height(value: 12)),
+                                padding: EdgeInsets.only(
+                                  bottom: AppSize.height(value: 12),
+                                ),
                                 child: CustomExpansionTile(
                                   tapHeaderToExpand: false,
-                                  padding: EdgeInsets.all(AppSize.width(value: 16)),
+                                  padding: EdgeInsets.all(
+                                    AppSize.width(value: 16),
+                                  ),
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(12),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Colors.black.withValues(alpha: 0.05),
+                                        color: Colors.black.withValues(
+                                          alpha: 0.05,
+                                        ),
                                         blurRadius: 4,
                                         offset: const Offset(0, 2),
                                       ),
@@ -94,6 +105,7 @@ class Faq extends ConsumerWidget {
                                     fontWeight: FontWeight.w600,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
+                                    isDynamic: true,
                                   ),
                                   children: [
                                     Padding(
@@ -106,6 +118,7 @@ class Faq extends ConsumerWidget {
                                         fontSize: AppSize.width(value: 14),
                                         color: AppColors.instance.gray50,
                                         maxLines: 10,
+                                        isDynamic: true,
                                       ),
                                     ),
                                   ],
@@ -120,9 +133,8 @@ class Faq extends ConsumerWidget {
                             child: CircularProgressIndicator(),
                           ),
                         ),
-                        error: (error, stack) => Center(
-                          child: Text('Error loading FAQs: $error'),
-                        ),
+                        error: (error, stack) =>
+                            Center(child: Text('Error loading FAQs: $error')),
                       ),
                     ],
                   ),

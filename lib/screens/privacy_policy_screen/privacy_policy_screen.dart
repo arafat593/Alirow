@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod_template/constant/app_asserts_icons_path.dart';
 import 'package:flutter_riverpod_template/constant/app_colors.dart';
 import 'package:flutter_riverpod_template/routes/app_routes.dart';
+import 'package:flutter_riverpod_template/utils/app_size.dart';
 import 'package:flutter_riverpod_template/utils/gap.dart';
 import 'package:flutter_riverpod_template/widgets/app_image/app_image.dart';
 import 'package:flutter_riverpod_template/widgets/texts/app_html_text.dart';
@@ -24,25 +25,35 @@ class PrivacyPolicyScreen extends ConsumerWidget {
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        AppRoutes.instance.pop();
-                      },
-                      child: AppImage(
-                        path: AppAssertsIconsPath.instance.arrowBack,
-                        height: 40,
-                        width: 40,
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          AppRoutes.instance.pop();
+                        },
+                        child: AppImage(
+                          path: AppAssertsIconsPath.instance.arrowBack,
+                          height: 40,
+                          width: 40,
+                        ),
                       ),
-                    ),
-                    Gap(width: 20),
-                    AppText(
-                      text: "Privacy & Policy",
-                      fontSize: 32,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ],
+
+                      Gap(width: 20),
+
+                      Expanded(
+                        child: AppText(
+                          text: "Privacy & Policy",
+                          fontSize: 34,
+                          fontWeight: FontWeight.w600,
+                          isDynamic: true,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -78,7 +89,9 @@ class PrivacyPolicyScreen extends ConsumerWidget {
                           ),
                         ),
                         error: (error, stack) => Center(
-                          child: Text('Error loading Privacy Policy: $error'),
+                          child: AppText(
+                            text: 'Error loading Privacy Policy: $error',
+                          ),
                         ),
                       ),
                     ),

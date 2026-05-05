@@ -41,6 +41,7 @@ class About extends ConsumerWidget {
                       text: "About",
                       fontSize: 32,
                       fontWeight: FontWeight.w600,
+                      isDynamic: true,
                     ),
                   ],
                 ),
@@ -48,7 +49,10 @@ class About extends ConsumerWidget {
             ),
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 22),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 22,
+                ),
                 child: SizedBox(
                   width: double.infinity,
                   child: DecoratedBox(
@@ -77,7 +81,10 @@ class About extends ConsumerWidget {
                               ),
                             ),
                             error: (error, stack) => Center(
-                              child: Text('Error loading About: $error'),
+                              child: AppText(
+                                text: 'Error loading About: $error',
+                                isDynamic: true, 
+                              ),
                             ),
                           ),
                         ],

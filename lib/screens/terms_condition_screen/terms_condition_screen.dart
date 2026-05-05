@@ -37,10 +37,15 @@ class TermsConditionScreen extends ConsumerWidget {
                       ),
                     ),
                     Gap(width: 20),
-                    AppText(
-                      text: "T&C",
-                      fontSize: 32,
-                      fontWeight: FontWeight.w600,
+                    Expanded(
+                      child: AppText(
+                        text: "Terms & Conditions",
+                        fontSize: 32,
+                        fontWeight: FontWeight.w600,
+                        isDynamic: true,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                   ],
                 ),
@@ -48,7 +53,10 @@ class TermsConditionScreen extends ConsumerWidget {
             ),
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 22),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 22,
+                ),
                 child: SizedBox(
                   width: double.infinity,
                   child: DecoratedBox(

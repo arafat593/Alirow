@@ -11,6 +11,7 @@ import 'package:flutter_riverpod_template/screens/home_screen/widgets/product_co
 import 'package:flutter_riverpod_template/screens/home_screen/widgets/filter_bottom_sheet.dart';
 import 'package:flutter_riverpod_template/utils/app_size.dart';
 import 'package:flutter_riverpod_template/utils/gap.dart';
+import 'package:flutter_riverpod_template/utils/languages/language_provider.dart';
 import 'package:flutter_riverpod_template/widgets/app_image/app_image.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
@@ -98,6 +99,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 ref.read(homeProvider.notifier).search(value),
                             decoration: InputDecoration(
                               hintText: "Search by Product Name",
+                              hintStyle: TextStyle(),
                               prefixIcon: const Icon(Icons.search),
                               suffixIcon: state.searchQuery.isNotEmpty
                                   ? GestureDetector(
@@ -115,10 +117,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                           context: context,
                                           isScrollControlled: true,
                                           backgroundColor: Colors.transparent,
-                                          builder: (context) => const FilterBottomSheet(),
+                                          builder: (context) =>
+                                              const FilterBottomSheet(),
                                         );
                                       },
-                                      child: const Icon(Icons.filter_alt_outlined),
+                                      child: const Icon(
+                                        Icons.filter_alt_outlined,
+                                      ),
                                     ),
                               filled: true,
                               fillColor: AppColors.instance.dark2A,

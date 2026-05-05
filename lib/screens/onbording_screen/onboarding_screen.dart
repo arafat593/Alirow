@@ -61,55 +61,59 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         child: Column(
           children: [
             const Gap(height: 40),
-          AppImage(
-            path: AppAssertsImagePath.instance.onBoardingIcon,
-            height: AppSize.height(value: 280),
-          ),
-          const Gap(height: 70),
-          AppText(
-            text: "Welcome to Dalsan \n Digital Market!",
-            fontWeight: FontWeight.w600,
-            fontSize: AppSize.width(value: 26),
-            textAlign: TextAlign.center,
-            color: Color(0xFF031109),
-          ),
-          const Gap(height: 10),
-          AppText(
-            text: "Choose your way to benefit:",
-            fontWeight: FontWeight.w400,
-            fontSize: AppSize.width(value: 16),
-            textAlign: TextAlign.center,
-            color: Color(0xFF2A3730),
-          ),
-          const Gap(height: 10),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: AppSize.width(value: 10)),
-            child: RichText(
+            AppImage(
+              path: AppAssertsImagePath.instance.onBoardingIcon,
+              height: AppSize.height(value: 280),
+            ),
+            const Gap(height: 70),
+            AppText(
+              text: "Welcome to Dalsan \n Digital Market!",
+              fontWeight: FontWeight.w600,
+              fontSize: AppSize.width(value: 26),
               textAlign: TextAlign.center,
-              text: TextSpan(
-                text: 'Get the best products from ',
-                style: TextStyle(
-                  color: Colors.black87,
-                  fontSize: AppSize.width(value: 15),
-                  height: 1.5,
+              color: Color(0xFF031109),
+              isDynamic: true,
+            ),
+            const Gap(height: 10),
+            AppText(
+              text: "Choose your way to benefit:",
+              fontWeight: FontWeight.w400,
+              fontSize: AppSize.width(value: 16),
+              textAlign: TextAlign.center,
+              color: Color(0xFF2A3730),
+              isDynamic: true,
+            ),
+            const Gap(height: 10),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: AppSize.width(value: 10),
+              ),
+              child: RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  text: 'Get the best products from ',
+                  style: TextStyle(
+                    color: Colors.black87,
+                    fontSize: AppSize.width(value: 15),
+                    height: 1.5,
+                  ),
+                  children: const <TextSpan>[
+                    TextSpan(
+                      text: 'China delivered to Somalia.',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    TextSpan(text: ' Browse easily and order instantly via'),
+                    TextSpan(
+                      text: ' WhatsApp.',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
-                children: const <TextSpan>[
-                  TextSpan(
-                    text: 'China delivered to Somalia.',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  TextSpan(text: ' Browse easily and order instantly via'),
-                  TextSpan(
-                    text: ' WhatsApp.',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ],
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-    ),
     );
   }
 
@@ -126,51 +130,53 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
             ),
             const Gap(height: 20),
             AppText(
-            text: "Welcome to Dalsan \n Digital Market!",
-            fontWeight: FontWeight.w600,
-            fontSize: AppSize.width(value: 26),
-            textAlign: TextAlign.center,
-            color: Color(0xFF031109),
-          ),
-          const Gap(height: 10),
-          AppText(
-            text: "Choose your way to benefit:",
-            fontWeight: FontWeight.w400,
-            fontSize: AppSize.width(value: 16),
-            textAlign: TextAlign.center,
-            color: Color(0xFF2A3730),
-          ),
-          const Gap(height: 12),
-          _buildBenefitItem(
-            "1. Direct Delivery from China — ",
-            "We deliver your products straight to your home or workplace.",
-          ),
-          _buildBenefitItem(
-            "2. Marketing Partner — ",
-            "Earn a daily 10% commission by promoting our services.",
-          ),
-          _buildBenefitItem(
-            "3. Investment Plan — ",
-            "Invest and receive a 10% monthly profit, automatically added to your account on the 26th.",
-          ),
-          const Gap(height: 10),
-          RichText(
-            textAlign: TextAlign.center,
-            text: TextSpan(
-              text: 'Start now and make the most of your \n',
-              style: TextStyle(
-                color: Colors.black87,
-                fontSize: AppSize.width(value: 14),
-              ),
-              children: const <TextSpan>[
-                TextSpan(
-                  text: 'opportunity!',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ],
+              text: "Welcome to Dalsan \n Digital Market!",
+              fontWeight: FontWeight.w600,
+              fontSize: AppSize.width(value: 26),
+              textAlign: TextAlign.center,
+              color: Color(0xFF031109),
+              isDynamic: true,
             ),
-          ),
-          const Gap(height: 13),
+            const Gap(height: 10),
+            AppText(
+              text: "Choose your way to benefit:",
+              fontWeight: FontWeight.w400,
+              fontSize: AppSize.width(value: 16),
+              textAlign: TextAlign.center,
+              color: Color(0xFF2A3730),
+              isDynamic: true,
+            ),
+            const Gap(height: 12),
+            _buildBenefitItem(
+              "1. Direct Delivery from China — ",
+              "We deliver your products straight to your home or workplace.",
+            ),
+            _buildBenefitItem(
+              "2. Marketing Partner — ",
+              "Earn a daily 10% commission by promoting our services.",
+            ),
+            _buildBenefitItem(
+              "3. Investment Plan — ",
+              "Invest and receive a 10% monthly profit, automatically added to your account on the 26th.",
+            ),
+            const Gap(height: 10),
+            RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                text: 'Start now and make the most of your \n',
+                style: TextStyle(
+                  color: Colors.black87,
+                  fontSize: AppSize.width(value: 14),
+                ),
+                children: const <TextSpan>[
+                  TextSpan(
+                    text: 'opportunity!',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ),
+            const Gap(height: 13),
           ],
         ),
       ),

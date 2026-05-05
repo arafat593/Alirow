@@ -53,6 +53,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
                           Gap(height: 20),
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               AppText(
                                 text: "Language",
@@ -60,20 +61,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 fontSize: AppSize.width(value: 16),
                                 fontWeight: FontWeight.w600,
                               ),
-                              Spacer(),
-                              DropdownButton<String>(
-                                value: _selectedLanguage,
-                                icon: Icon(Icons.keyboard_arrow_down, color: AppColors.instance.white50),
-                                dropdownColor: Colors.black,
-                                underline: const SizedBox(),
-                                style: TextStyle(
-                                  color: AppColors.instance.white50,
-                                  fontSize: AppSize.width(value: 16),
-                                  fontWeight: FontWeight.w600,
-                                ),
-                                items: [
-                                  DropdownMenuItem(
-                                    value: "English",
+                              PopupMenuButton<String>(
+                                initialValue: _selectedLanguage,
+                                color: Colors.black,
+                                position: PopupMenuPosition.under,
+                                onSelected: (String value) {
+                                  setState(() {
+                                    _selectedLanguage = value;
+                                  });
+                                },
+                                itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                                  PopupMenuItem<String>(
+                                    value: 'English',
                                     child: AppText(
                                       text: "English",
                                       color: AppColors.instance.white50,
@@ -81,8 +80,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
-                                  DropdownMenuItem(
-                                    value: "Somali",
+                                  PopupMenuItem<String>(
+                                    value: 'Somali',
                                     child: AppText(
                                       text: "Somali",
                                       color: AppColors.instance.white50,
@@ -91,13 +90,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     ),
                                   ),
                                 ],
-                                onChanged: (value) {
-                                  if (value != null) {
-                                    setState(() {
-                                      _selectedLanguage = value;
-                                    });
-                                  }
-                                },
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    AppText(
+                                      text: _selectedLanguage,
+                                      color: AppColors.instance.white50,
+                                      fontSize: AppSize.width(value: 16),
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 8.0),
+                                      child: Icon(Icons.keyboard_arrow_down, color: AppColors.instance.white50),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
