@@ -13,6 +13,7 @@ import 'package:flutter_riverpod_template/utils/app_size.dart';
 import 'package:flutter_riverpod_template/utils/gap.dart';
 import 'package:flutter_riverpod_template/utils/languages/language_provider.dart';
 import 'package:flutter_riverpod_template/widgets/app_image/app_image.dart';
+import 'package:flutter_riverpod_template/widgets/texts/app_text.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -231,9 +232,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       return const Center(
         child: Padding(
           padding: EdgeInsets.all(40),
-          child: Text(
-            'No products found',
-            style: TextStyle(fontSize: 16, color: Colors.grey),
+          child: AppText(
+            text: 'No products found',
+            fontSize: 16,
+            color: Colors.grey,
           ),
         ),
       );

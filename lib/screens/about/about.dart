@@ -62,32 +62,28 @@ class About extends ConsumerWidget {
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          aboutAsyncValue.when(
-                            data: (data) => AppHtmlWidget(
-                              html: data,
-                              textStyle: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.instance.dark500,
-                              ),
-                            ),
-                            loading: () => const Center(
-                              child: Padding(
-                                padding: EdgeInsets.all(20.0),
-                                child: CircularProgressIndicator(),
-                              ),
-                            ),
-                            error: (error, stack) => Center(
-                              child: AppText(
-                                text: 'Error loading About: $error',
-                                isDynamic: true, 
-                              ),
-                            ),
+                      child: aboutAsyncValue.when(
+                        data: (data) => AppHtmlWidget(
+                          html: data,
+                          textStyle: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.instance.dark500,
                           ),
-                        ],
+                        ),
+
+                        loading: () => const Center(
+                          child: Padding(
+                            padding: EdgeInsets.all(20.0),
+                            child: CircularProgressIndicator(),
+                          ),
+                        ),
+                        error: (error, stack) => Center(
+                          child: AppText(
+                            text: 'Error loading about: $error',
+                            isDynamic: true,
+                          ),
+                        ),
                       ),
                     ),
                   ),

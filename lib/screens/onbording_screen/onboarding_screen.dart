@@ -72,7 +72,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               fontSize: AppSize.width(value: 26),
               textAlign: TextAlign.center,
               color: Color(0xFF031109),
-              isDynamic: true,
+              
             ),
             const Gap(height: 10),
             AppText(
@@ -81,7 +81,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               fontSize: AppSize.width(value: 16),
               textAlign: TextAlign.center,
               color: Color(0xFF2A3730),
-              isDynamic: true,
+            
             ),
             const Gap(height: 10),
             Padding(
@@ -135,7 +135,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               fontSize: AppSize.width(value: 26),
               textAlign: TextAlign.center,
               color: Color(0xFF031109),
-              isDynamic: true,
+             
             ),
             const Gap(height: 10),
             AppText(
@@ -144,7 +144,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               fontSize: AppSize.width(value: 16),
               textAlign: TextAlign.center,
               color: Color(0xFF2A3730),
-              isDynamic: true,
+           
             ),
             const Gap(height: 12),
             _buildBenefitItem(

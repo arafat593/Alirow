@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod_template/constant/app_colors.dart';
 import 'package:flutter_riverpod_template/utils/app_size.dart';
+import 'package:flutter_riverpod_template/widgets/texts/app_text.dart';
 
 class CustomSelectedOption extends StatelessWidget {
   final String title;
@@ -44,15 +45,14 @@ class CustomSelectedOption extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 0),
             child: Center(
-              child: Text(
-                title,
-                style: TextStyle(
-                  fontSize: AppSize.width(value: 15),
-                  fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-                  color: isSelected
-                      ? Colors.white
-                      : AppColors.instance.textBlack500,
-                ),
+              child: AppText(
+                text: title,
+                fontSize: AppSize.width(value: 15),
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+                isDynamic: true,
+                color: isSelected
+                    ? Colors.white
+                    : AppColors.instance.textBlack500,
               ),
             ),
           ),

@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod_template/constant/app_asserts_icons_path.dart';
 import 'package:flutter_riverpod_template/constant/app_colors.dart';
 import 'package:flutter_riverpod_template/routes/app_routes.dart';
-import 'package:flutter_riverpod_template/utils/app_size.dart';
 import 'package:flutter_riverpod_template/utils/gap.dart';
 import 'package:flutter_riverpod_template/widgets/app_image/app_image.dart';
 import 'package:flutter_riverpod_template/widgets/texts/app_html_text.dart';
@@ -91,6 +90,7 @@ class PrivacyPolicyScreen extends ConsumerWidget {
                         error: (error, stack) => Center(
                           child: AppText(
                             text: 'Error loading Privacy Policy: $error',
+                            isDynamic: true,
                           ),
                         ),
                       ),

@@ -70,6 +70,7 @@ class _FilterBottomSheetState extends ConsumerState<FilterBottomSheet> {
                 text: "Filter",
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
+                isDynamic: true,
               ),
               GestureDetector(
                 onTap: () => Navigator.pop(context),
@@ -84,6 +85,7 @@ class _FilterBottomSheetState extends ConsumerState<FilterBottomSheet> {
             text: "Price Range",
             fontSize: 16,
             fontWeight: FontWeight.w600,
+            isDynamic: true,
           ),
           RangeSlider(
             values: RangeValues(_minPrice, _maxPrice),
@@ -149,7 +151,7 @@ class _FilterBottomSheetState extends ConsumerState<FilterBottomSheet> {
                   controller: _maxPriceController,
                   keyboardType: TextInputType.number,
                   style: TextStyle(
-                    color: AppColors.instance.black600, // তোমার পছন্দমতো color
+                    color: AppColors.instance.black600,
                     fontSize: 16,
                   ),
                   decoration: InputDecoration(
@@ -183,7 +185,12 @@ class _FilterBottomSheetState extends ConsumerState<FilterBottomSheet> {
           const Gap(height: 24),
 
           // Sort By
-          AppText(text: "Sort By", fontSize: 16, fontWeight: FontWeight.w600),
+          AppText(
+            text: "Sort By",
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            isDynamic: true,
+          ),
           const Gap(height: 12),
           Wrap(
             spacing: 12,
@@ -224,6 +231,7 @@ class _FilterBottomSheetState extends ConsumerState<FilterBottomSheet> {
                             ? Colors.white
                             : AppColors.instance.dark500,
                         fontSize: 14,
+                        isDynamic: true,
                       ),
                     ),
                   );
@@ -253,6 +261,7 @@ class _FilterBottomSheetState extends ConsumerState<FilterBottomSheet> {
                 color: Colors.white,
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
+                isDynamic: true,
               ),
             ),
           ),

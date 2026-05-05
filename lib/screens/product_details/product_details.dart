@@ -95,7 +95,7 @@ Please let me know the next steps for payment and delivery!
         children: [
           const Icon(Icons.error_outline, size: 48, color: Colors.red),
           const SizedBox(height: 12),
-          Text(error, style: const TextStyle(fontSize: 16)),
+          AppText(text: error, fontSize: 16),
           const SizedBox(height: 12),
           ElevatedButton(
             onPressed: () {
@@ -105,7 +105,7 @@ Please let me know the next steps for payment and delivery!
                     .getProductById(widget.productId!);
               }
             },
-            child: const Text('Retry'),
+            child: const AppText(text: 'Retry'),
           ),
         ],
       ),
@@ -113,7 +113,7 @@ Please let me know the next steps for payment and delivery!
   }
 
   Widget _buildEmpty() {
-    return const Center(child: Text('No product found'));
+    return const Center(child: AppText(text: 'No product found'));
   }
 
   Widget _buildContent(ProductModel product, int selectImage) {
@@ -233,6 +233,7 @@ Please let me know the next steps for payment and delivery!
                   text: product.name,
                   fontSize: 24,
                   fontWeight: FontWeight.w600,
+                  isDynamic: true,
                 ),
 
                 Gap(height: 10),
@@ -247,6 +248,7 @@ Please let me know the next steps for payment and delivery!
                         decoration: TextDecoration.lineThrough,
                         decorationColor: Colors.red,
                         fontSize: 18,
+                        isDynamic: true,
                       ),
                       Gap(width: 10),
                     ],
@@ -254,6 +256,7 @@ Please let me know the next steps for payment and delivery!
                       text: "\$${product.salePrice.toStringAsFixed(0)}",
                       fontSize: 24,
                       fontWeight: FontWeight.w500,
+                      isDynamic: true,
                     ),
                   ],
                 ),
@@ -265,6 +268,7 @@ Please let me know the next steps for payment and delivery!
                   text: "Product Details",
                   fontSize: 24,
                   fontWeight: FontWeight.w600,
+                  isDynamic: true,
                 ),
                 Gap(height: 10),
                 AppText(
@@ -272,6 +276,7 @@ Please let me know the next steps for payment and delivery!
                       ? product.description!
                       : 'No description available.',
                   fontSize: 16,
+                  isDynamic: true,
                   fontWeight: FontWeight.w400,
                 ),
 
@@ -297,6 +302,7 @@ Please let me know the next steps for payment and delivery!
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                         color: Colors.white,
+                        isDynamic: true,
                       ),
                     ],
                   ),
