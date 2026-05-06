@@ -60,6 +60,7 @@ void appImageUserTake({required Function(String) callBack}) {
                           const AppText(
                             text: "Camera",
                             fontWeight: FontWeight.w700,
+                            isDynamic: true,
                           ),
                         ],
                       ),
@@ -87,6 +88,7 @@ void appImageUserTake({required Function(String) callBack}) {
                           const AppText(
                             text: "Gallery",
                             fontWeight: FontWeight.w700,
+                            isDynamic: true,
                           ),
                         ],
                       ),
@@ -264,7 +266,11 @@ Future<bool> askFirst({
         child: Column(
           children: [
             Gap(height: 10),
-            AppText(text: content, textAlign: TextAlign.center),
+            AppText(
+              text: content,
+              textAlign: TextAlign.center,
+              isDynamic: true,
+            ),
             Gap(height: 20),
             SizedBox(
               width: AppSize.size.width * 0.4,
@@ -273,7 +279,7 @@ Future<bool> askFirst({
                   userConfirmed = true;
                   Navigator.pop(rootScaffoldMessengerKey.currentState!.context);
                 },
-                child: AppText(text: acceptButton),
+                child: AppText(text: acceptButton, isDynamic: true),
               ),
             ),
             Gap(height: 10),
@@ -301,7 +307,11 @@ Future<bool> getCallAgainPermission({
         child: Column(
           children: [
             Gap(height: 10),
-            AppText(text: content, textAlign: TextAlign.center),
+            AppText(
+              text: content,
+              textAlign: TextAlign.center,
+              isDynamic: true,
+            ),
             Gap(height: 20),
             Row(
               children: [
@@ -313,7 +323,7 @@ Future<bool> getCallAgainPermission({
                         rootScaffoldMessengerKey.currentState!.context,
                       );
                     },
-                    child: AppText(text: cancelButton),
+                    child: AppText(text: cancelButton, isDynamic: true),
                   ),
                 ),
 
@@ -327,7 +337,7 @@ Future<bool> getCallAgainPermission({
                         rootScaffoldMessengerKey.currentState!.context,
                       );
                     },
-                    child: AppText(text: acceptButton),
+                    child: AppText(text: acceptButton, isDynamic: true),
                   ),
                 ),
               ],

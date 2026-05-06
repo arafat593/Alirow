@@ -110,7 +110,9 @@ Your data is never shared and stays on your device unless you choose to upload i
         return;
       }
 
-      localImagePaths = pickedMedia.map((xfile) => File(xfile.path).path).toList();
+      localImagePaths = pickedMedia
+          .map((xfile) => File(xfile.path).path)
+          .toList();
 
       callBack(localImagePaths);
     }
@@ -121,7 +123,8 @@ Your data is never shared and stays on your device unless you choose to upload i
 
 Future<bool> askFirst({
   String title = "Gallery",
-  String content = "This permission is required to continue. Please enable it from settings.",
+  String content =
+      "This permission is required to continue. Please enable it from settings.",
   String acceptButton = "Open Settings",
   String cancelButton = "Cancel",
 }) async {
@@ -143,7 +146,7 @@ Future<bool> askFirst({
                   userConfirmed = true;
                   Navigator.pop(rootScaffoldMessengerKey.currentState!.context);
                 },
-                child: AppText(text: acceptButton),
+                child: AppText(text: acceptButton, isDynamic: true),
               ),
             ),
             Gap(height: 10),
@@ -157,7 +160,8 @@ Future<bool> askFirst({
 
 Future<bool> getCallAgainPermission({
   String title = "Gallery",
-  String content = "This permission is required to continue. Please enable it from settings.",
+  String content =
+      "This permission is required to continue. Please enable it from settings.",
   String acceptButton = "",
   String cancelButton = "Cancel",
 }) async {
@@ -170,7 +174,11 @@ Future<bool> getCallAgainPermission({
         child: Column(
           children: [
             Gap(height: 10),
-            AppText(text: content, textAlign: TextAlign.center),
+            AppText(
+              text: content,
+              textAlign: TextAlign.center,
+              isDynamic: true,
+            ),
             Gap(height: 20),
             Row(
               children: [
@@ -178,9 +186,11 @@ Future<bool> getCallAgainPermission({
                   child: ElevatedButton(
                     onPressed: () async {
                       userConfirmed = false;
-                      Navigator.pop(rootScaffoldMessengerKey.currentState!.context);
+                      Navigator.pop(
+                        rootScaffoldMessengerKey.currentState!.context,
+                      );
                     },
-                    child: AppText(text: cancelButton),
+                    child: AppText(text: cancelButton, isDynamic: true),
                   ),
                 ),
 
@@ -190,9 +200,11 @@ Future<bool> getCallAgainPermission({
                   child: ElevatedButton(
                     onPressed: () async {
                       userConfirmed = true;
-                      Navigator.pop(rootScaffoldMessengerKey.currentState!.context);
+                      Navigator.pop(
+                        rootScaffoldMessengerKey.currentState!.context,
+                      );
                     },
-                    child: AppText(text: acceptButton),
+                    child: AppText(text: acceptButton, isDynamic: true),
                   ),
                 ),
               ],

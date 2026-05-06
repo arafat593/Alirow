@@ -34,7 +34,10 @@ class UpComingDialog extends StatelessWidget {
     return Container(
       width: AppSize.size.width * 0.7,
       padding: EdgeInsets.all(AppSize.width(value: 15.0)),
-      decoration: BoxDecoration(color: AppColors.instance.gray700, borderRadius: BorderRadius.circular(AppSize.width(value: 15.0))),
+      decoration: BoxDecoration(
+        color: AppColors.instance.gray700,
+        borderRadius: BorderRadius.circular(AppSize.width(value: 15.0)),
+      ),
       child: Column(
         spacing: AppSize.width(value: 10),
         mainAxisSize: MainAxisSize.min,
@@ -54,9 +57,14 @@ class UpComingDialog extends StatelessWidget {
             textAlign: TextAlign.center,
             fontWeight: FontWeight.w500,
             fontSize: AppSize.width(value: 18),
+            isDynamic: true,
           ),
 
-          AppText(text: "We’re almost ready to show you. Get ready to be amazed.", textAlign: TextAlign.center),
+          AppText(
+            text: "We’re almost ready to show you. Get ready to be amazed.",
+            textAlign: TextAlign.center,
+            isDynamic: true,
+          ),
           Gap(height: 10),
         ],
       ),

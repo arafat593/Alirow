@@ -36,7 +36,10 @@ class LogOutDialog extends StatelessWidget {
     return Container(
       width: AppSize.size.width * 0.75,
       padding: EdgeInsets.all(AppSize.width(value: 25.0)),
-      decoration: BoxDecoration(color: AppColors.instance.gray700, borderRadius: BorderRadius.circular(AppSize.width(value: 15.0))),
+      decoration: BoxDecoration(
+        color: AppColors.instance.gray700,
+        borderRadius: BorderRadius.circular(AppSize.width(value: 15.0)),
+      ),
       child: Column(
         spacing: AppSize.width(value: 10),
         mainAxisSize: MainAxisSize.min,
@@ -46,13 +49,18 @@ class LogOutDialog extends StatelessWidget {
             textAlign: TextAlign.center,
             fontWeight: FontWeight.w500,
             height: 1.6,
+            isDynamic: true,
             fontSize: AppSize.width(value: 18),
           ),
           Gap(height: 10),
           Row(
             children: [
               Expanded(
-                child: AppButton(backgroundColor: AppColors.instance.gray700, borderColor: AppColors.instance.white50, title: "Cancel"),
+                child: AppButton(
+                  backgroundColor: AppColors.instance.gray700,
+                  borderColor: AppColors.instance.white50,
+                  title: "Cancel",
+                ),
               ),
               Gap(width: 20),
               Expanded(

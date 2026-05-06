@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod_template/constant/app_colors.dart';
 import 'package:flutter_riverpod_template/utils/app_size.dart';
-import 'package:flutter_riverpod_template/widgets/texts/app_text.dart' show AppText;
+import 'package:flutter_riverpod_template/widgets/texts/app_text.dart'
+    show AppText;
 
 class AppButton extends StatelessWidget {
   const AppButton({
@@ -62,14 +63,22 @@ class AppButton extends StatelessWidget {
             decoration ??
             BoxDecoration(
               color: backgroundColor ?? AppColors.instance.primary,
-              border: border ?? Border.all(color: borderColor ?? AppColors.instance.primary),
-              borderRadius: borderRadius ?? BorderRadius.circular(AppSize.width(value: AppSize.width(value: 8.0))),
+              border:
+                  border ??
+                  Border.all(color: borderColor ?? AppColors.instance.primary),
+              borderRadius:
+                  borderRadius ??
+                  BorderRadius.circular(
+                    AppSize.width(value: AppSize.width(value: 8.0)),
+                  ),
             ),
         child: isLoading
             ? SizedBox(
                 width: loadingSize ?? AppSize.size.height * 0.04,
                 height: loadingSize ?? AppSize.size.height * 0.04,
-                child: CircularProgressIndicator(color: loaderColor ?? AppColors.instance.white50),
+                child: CircularProgressIndicator(
+                  color: loaderColor ?? AppColors.instance.white50,
+                ),
               )
             : child ??
                   AppText(
@@ -77,6 +86,7 @@ class AppButton extends StatelessWidget {
                     color: titleColor ?? AppColors.instance.white50,
                     fontWeight: fontWeight ?? FontWeight.w700,
                     fontSize: fontSize ?? 20,
+                    isDynamic: true,
                   ),
       ),
     );

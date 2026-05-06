@@ -40,6 +40,10 @@ class AppText extends ConsumerStatefulWidget {
 }
 
 class _AppTextState extends ConsumerState<AppText> {
+  Future<String>? _translationFuture;
+  String? _cachedLanguage;
+  String? _cachedText;
+
   Future<String> _translateText(String lang) async {
     try {
       String targetLang = lang.split('_')[0].toLowerCase();
@@ -86,20 +90,19 @@ class _AppTextState extends ConsumerState<AppText> {
       );
     }
 
-    return FutureBuilder(
+    if (_translationFuture == null ||
+        _cachedLanguage != selectedLanguage ||
+        _cachedText != widget.text) {
+      _cachedLanguage = selectedLanguage;
+      _cachedText = widget.text;
+      _translationFuture = _translateText(selectedLanguage);
+    }
+
+    return FutureBuilder<String>(
       key: ValueKey("${widget.text}_$selectedLanguage"),
-      future: _translateText(selectedLanguage),
+      future: _translationFuture,
+      initialData: widget.text,
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Text(
-            "...",
-            maxLines: widget.maxLines,
-            overflow: widget.overflow,
-            textAlign: widget.textAlign,
-            style: style,
-            textScaler: TextScaler.linear(widget.textScaleFactor),
-          );
-        }
         final txt = snapshot.data ?? widget.text;
 
         return Text(

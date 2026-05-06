@@ -95,7 +95,7 @@ Please let me know the next steps for payment and delivery!
         children: [
           const Icon(Icons.error_outline, size: 48, color: Colors.red),
           const SizedBox(height: 12),
-          AppText(text: error, fontSize: 16),
+          AppText(text: error, fontSize: 16, isDynamic: true),
           const SizedBox(height: 12),
           ElevatedButton(
             onPressed: () {
@@ -105,7 +105,7 @@ Please let me know the next steps for payment and delivery!
                     .getProductById(widget.productId!);
               }
             },
-            child: const AppText(text: 'Retry'),
+            child: const AppText(text: 'Retry', isDynamic: true),
           ),
         ],
       ),
@@ -113,7 +113,9 @@ Please let me know the next steps for payment and delivery!
   }
 
   Widget _buildEmpty() {
-    return const Center(child: AppText(text: 'No product found'));
+    return const Center(
+      child: AppText(text: 'No product found', isDynamic: true),
+    );
   }
 
   Widget _buildContent(ProductModel product, int selectImage) {

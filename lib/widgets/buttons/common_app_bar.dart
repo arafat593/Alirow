@@ -3,11 +3,22 @@ import 'package:flutter_riverpod_template/constant/app_colors.dart';
 import 'package:flutter_riverpod_template/utils/app_size.dart';
 import 'package:flutter_riverpod_template/widgets/texts/app_text.dart';
 
-AppBar commonAppBar({String? title, Widget? backButton, Widget? titleWidget, List<Widget>? actions}) {
+AppBar commonAppBar({
+  String? title,
+  Widget? backButton,
+  Widget? titleWidget,
+  List<Widget>? actions,
+}) {
   return AppBar(
     leading: backButton,
     centerTitle: true,
-    title: titleWidget ?? AppText(text: title ?? "", fontSize: AppSize.width(value: 18)),
+    title:
+        titleWidget ??
+        AppText(
+          text: title ?? "",
+          fontSize: AppSize.width(value: 18),
+          isDynamic: true,
+        ),
     backgroundColor: AppColors.instance.white50,
     surfaceTintColor: AppColors.instance.white50,
     elevation: 2,

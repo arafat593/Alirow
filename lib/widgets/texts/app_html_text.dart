@@ -107,7 +107,7 @@ class _AppHtmlWidgetState extends ConsumerState<AppHtmlWidget> {
       future: _translateHtml(language),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return AppText(text: "Loading...");
+          return AppText(text: "Loading...", isDynamic: true);
         }
 
         if (snapshot.hasError) {
