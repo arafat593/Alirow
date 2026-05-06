@@ -58,15 +58,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               // ── Header card ───────────────────────────────────────────────
               SliverToBoxAdapter(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: AppSize.width(value: 16),
-                    vertical: AppSize.width(value: 18),
-                  ),
+                  padding: EdgeInsets.symmetric(horizontal: AppSize.width(value: 16), vertical: AppSize.width(value: 18)),
                   child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: AppColors.instance.grayContainer,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
+                    decoration: BoxDecoration(color: AppColors.instance.grayContainer, borderRadius: BorderRadius.circular(12)),
                     child: Padding(
                       padding: const EdgeInsets.all(16),
                       child: Column(
@@ -81,34 +75,26 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                               const Spacer(),
                               GestureDetector(
                                 onTap: () {
-                                  AppRoutes.instance.pushNamed(
-                                    AppRoutesKey.instance.settingsScreen,
-                                  );
+                                  AppRoutes.instance.pushNamed(AppRoutesKey.instance.settingsScreen);
                                 },
-                                child: AppImage(
-                                  path: AppAssertsIconsPath.instance.drawer,
-                                  width: 42,
-                                  height: 42,
-                                ),
+                                child: AppImage(path: AppAssertsIconsPath.instance.drawer, width: 42, height: 42),
                               ),
                             ],
                           ),
                           Gap(height: 30),
                           TextField(
                             controller: _searchController,
-                            onChanged: (value) =>
-                                ref.read(homeProvider.notifier).search(value),
+                            onChanged: (value) => ref.read(homeProvider.notifier).search(value),
                             decoration: InputDecoration(
-                              hintText: "Search by Product Name",
+                              // hintText: "Search by Product Name",
+                              hint: AppText(text: "Search by Product Name", isDynamic: true, color: AppColors.instance.gray50),
                               hintStyle: TextStyle(),
                               prefixIcon: const Icon(Icons.search),
                               suffixIcon: state.searchQuery.isNotEmpty
                                   ? GestureDetector(
                                       onTap: () {
                                         _searchController.clear();
-                                        ref
-                                            .read(homeProvider.notifier)
-                                            .search('');
+                                        ref.read(homeProvider.notifier).search('');
                                       },
                                       child: const Icon(Icons.close),
                                     )
@@ -118,20 +104,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                           context: context,
                                           isScrollControlled: true,
                                           backgroundColor: Colors.transparent,
-                                          builder: (context) =>
-                                              const FilterBottomSheet(),
+                                          builder: (context) => const FilterBottomSheet(),
                                         );
                                       },
-                                      child: const Icon(
-                                        Icons.filter_alt_outlined,
-                                      ),
+                                      child: const Icon(Icons.filter_alt_outlined),
                                     ),
                               filled: true,
                               fillColor: AppColors.instance.dark2A,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: BorderSide.none,
-                              ),
+                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide.none),
                             ),
                           ),
                         ],
@@ -147,29 +127,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 delegate: _StickyCategoryDelegate(
                   child: Container(
                     color: AppColors.instance.white50,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 8,
-                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: AppColors.instance.grayContainer,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
+                      decoration: BoxDecoration(color: AppColors.instance.grayContainer, borderRadius: BorderRadius.circular(12)),
                       child: Padding(
                         padding: const EdgeInsets.all(14),
                         child: SizedBox(
                           height: 42,
                           child: state.isCategoryLoading
-                              ? const Center(
-                                  child: SizedBox(
-                                    height: 20,
-                                    width: 20,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                    ),
-                                  ),
-                                )
+                              ? const Center(child: SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2)))
                               : ListView.builder(
                                   physics: const BouncingScrollPhysics(),
                                   scrollDirection: Axis.horizontal,
@@ -177,11 +143,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                   itemBuilder: (context, index) {
                                     return CustomSelectedOption(
                                       title: categoryLabels[index],
-                                      isSelected:
-                                          state.selectedCategoryIndex == index,
-                                      onTap: () => ref
-                                          .read(homeProvider.notifier)
-                                          .selectCategory(index),
+                                      isSelected: state.selectedCategoryIndex == index,
+                                      onTap: () => ref.read(homeProvider.notifier).selectCategory(index),
                                     );
                                   },
                                 ),
@@ -194,20 +157,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
               // ── Product grid ──────────────────────────────────────────────
               SliverPadding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: AppSize.width(value: 16),
-                  vertical: AppSize.width(value: 18),
-                ),
+                padding: EdgeInsets.symmetric(horizontal: AppSize.width(value: 16), vertical: AppSize.width(value: 18)),
                 sliver: SliverToBoxAdapter(
                   child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: AppColors.instance.grayContainer,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: _buildGrid(state),
-                    ),
+                    decoration: BoxDecoration(color: AppColors.instance.grayContainer, borderRadius: BorderRadius.circular(12)),
+                    child: Padding(padding: const EdgeInsets.all(16), child: _buildGrid(state)),
                   ),
                 ),
               ),
@@ -221,10 +175,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Widget _buildGrid(HomeState state) {
     if (state.isProductLoading) {
       return const Center(
-        child: Padding(
-          padding: EdgeInsets.all(40),
-          child: CircularProgressIndicator(),
-        ),
+        child: Padding(padding: EdgeInsets.all(40), child: CircularProgressIndicator()),
       );
     }
 
@@ -232,11 +183,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       return const Center(
         child: Padding(
           padding: EdgeInsets.all(40),
-          child: AppText(
-            text: 'No products found',
-            fontSize: 16,
-            color: Colors.grey,
-          ),
+          child: AppText(text: 'No products found', fontSize: 16, color: Colors.grey),
         ),
       );
     }
@@ -255,18 +202,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         final product = state.products[index];
         return GestureDetector(
           onTap: () {
-            AppRoutes.instance.pushNamed(
-              AppRoutesKey.instance.productDetails,
-              extra: product.id,
-            );
+            AppRoutes.instance.pushNamed(AppRoutesKey.instance.productDetails, extra: product.id);
           },
           child: ProductContainer(
             image: product.thumbnail,
             title: product.name,
             subtitle: product.category?.name ?? '',
-            discountPrice: product.hasDiscount
-                ? '\$${product.price.toStringAsFixed(0)}'
-                : null,
+            discountPrice: product.hasDiscount ? '\$${product.price.toStringAsFixed(0)}' : null,
             salePrice: '\$${product.salePrice.toStringAsFixed(0)}',
           ),
         );
@@ -287,11 +229,7 @@ class _StickyCategoryDelegate extends SliverPersistentHeaderDelegate {
   double get maxExtent => 86.0;
 
   @override
-  Widget build(
-    BuildContext context,
-    double shrinkOffset,
-    bool overlapsContent,
-  ) => child;
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) => child;
 
   @override
   bool shouldRebuild(_StickyCategoryDelegate old) => old.child != child;
