@@ -122,8 +122,12 @@ class _FilterBottomSheetState extends ConsumerState<FilterBottomSheet> {
                   decoration: InputDecoration(
                     prefixStyle: TextStyle(color: AppColors.instance.black600),
                     prefixText: '\$ ',
-                    labelText: 'Min Price',
-                    labelStyle: TextStyle(color: AppColors.instance.black600),
+                    label: AppText(
+                      text: "Min Price",
+                      isDynamic: true,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18,
+                    ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                       borderSide: BorderSide(
@@ -157,8 +161,12 @@ class _FilterBottomSheetState extends ConsumerState<FilterBottomSheet> {
                   decoration: InputDecoration(
                     prefixStyle: TextStyle(color: AppColors.instance.black600),
                     prefixText: '\$ ',
-                    labelText: 'Max Price',
-                    labelStyle: TextStyle(color: AppColors.instance.black600),
+                    label: AppText(
+                      text: "Max Price",
+                      isDynamic: true,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18,
+                    ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                       borderSide: BorderSide(
