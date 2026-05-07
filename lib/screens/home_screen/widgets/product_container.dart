@@ -11,65 +11,38 @@ class ProductContainer extends StatelessWidget {
   final String subtitle;
   final String? discountPrice;
   final String salePrice;
-  const ProductContainer({
-    super.key,
-    required this.title,
-    this.discountPrice,
-    required this.salePrice,
-    required this.subtitle,
-    required this.image,
-  });
+  const ProductContainer({super.key, required this.title, this.discountPrice, required this.salePrice, required this.subtitle, required this.image});
 
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        color: AppColors.instance.white50,
-      ),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: AppColors.instance.white50),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: DecoratedBox(
-          decoration: BoxDecoration(
-            color: AppColors.instance.white50,
-            borderRadius: BorderRadius.circular(8),
-          ),
+          decoration: BoxDecoration(color: AppColors.instance.white50, borderRadius: BorderRadius.circular(8)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(8),
-                child: AppImage(
-                  width: double.infinity,
-                  height: 110,
-                  url: image,
-                ),
+                child: AppImage(width: double.infinity, height: 110, url: image),
               ),
               Gap(height: 5),
               AppText(
                 text: title,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
                 fontSize: AppSize.width(value: 16),
                 fontWeight: FontWeight.w600,
                 color: Colors.black,
                 isDynamic: true,
               ),
-              AppText(
-                text: subtitle,
-                fontSize: AppSize.width(value: 12),
-                fontWeight: FontWeight.w400,
-                color: Colors.black,
-                isDynamic: true,
-              ),
+              AppText(text: subtitle, fontSize: AppSize.width(value: 12), fontWeight: FontWeight.w400, color: Colors.black, isDynamic: true),
               Gap(height: 5),
               Row(
                 children: [
-                  AppText(
-                    text: "Price:",
-                    fontSize: AppSize.width(value: 16),
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
-                    isDynamic: true,
-                  ),
+                  AppText(text: "Price:", fontSize: AppSize.width(value: 16), fontWeight: FontWeight.w600, color: Colors.black, isDynamic: true),
                   Spacer(),
                   Column(
                     children: [
@@ -83,13 +56,7 @@ class ProductContainer extends StatelessWidget {
                         isDynamic: true,
                       ),
                       Gap(width: 5),
-                      AppText(
-                        text: salePrice,
-                        fontSize: AppSize.width(value: 16),
-                        fontWeight: FontWeight.w400,
-                        color: Colors.black,
-                        isDynamic: true,
-                      ),
+                      AppText(text: salePrice, fontSize: AppSize.width(value: 16), fontWeight: FontWeight.w400, color: Colors.black, isDynamic: true),
                     ],
                   ),
                 ],

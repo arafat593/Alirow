@@ -3,9 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod_template/constant/app_asserts_icons_path.dart';
 import 'package:flutter_riverpod_template/constant/app_colors.dart';
 import 'package:flutter_riverpod_template/routes/app_routes.dart';
+import 'package:flutter_riverpod_template/routes/app_routes_key.dart';
 import 'package:flutter_riverpod_template/screens/product_details/model/product_model.dart';
-import 'package:flutter_riverpod_template/screens/product_details/porvider/product_details_provider.dart';
-import 'package:flutter_riverpod_template/screens/product_details/porvider/select_item.dart';
+import 'package:flutter_riverpod_template/screens/product_details/provider/product_details_provider.dart';
+import 'package:flutter_riverpod_template/screens/product_details/provider/select_item.dart';
+import 'package:flutter_riverpod_template/utils/app_log.dart';
 import 'package:flutter_riverpod_template/utils/app_size.dart';
 import 'package:flutter_riverpod_template/utils/gap.dart';
 import 'package:flutter_riverpod_template/widgets/app_image/app_image.dart';
@@ -25,22 +27,31 @@ class ProductDetails extends ConsumerStatefulWidget {
 }
 
 class _ProductDetailsState extends ConsumerState<ProductDetails> {
-  @override
-  void initState() {
-    super.initState();
-    if (widget.productId != null && widget.productId!.isNotEmpty) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        ref
-            .read(productDetailsProvider.notifier)
-            .getProductById(widget.productId!);
-      });
+  void onAppInitial() {
+    try {
+      if (widget.productId != null && widget.productId!.isNotEmpty) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          ref.read(productDetailsProvider.notifier).getProductById(widget.productId!);
+        });
+      } else {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          AppRoutes.instance.pushReplacementNamed(AppRoutesKey.instance.notFoundScreen);
+        });
+      }
+    } catch (e) {
+      errorLog("onAppInitial", e);
+      AppRoutes.instance.pushReplacementNamed(AppRoutesKey.instance.notFoundScreen);
     }
   }
 
+  @override
+  void initState() {
+    onAppInitial();
+    super.initState();
+  }
+
   Future<void> _openWhatsApp({required String message}) async {
-    final url = Uri.parse(
-      "https://wa.me/8801722877869?text=${Uri.encodeComponent(message)}",
-    );
+    final url = Uri.parse("https://wa.me/8801722877869?text=${Uri.encodeComponent(message)}");
     try {
       await launchUrl(url, mode: LaunchMode.externalApplication);
     } catch (e) {
@@ -51,9 +62,7 @@ class _ProductDetailsState extends ConsumerState<ProductDetails> {
   String _buildOrderMessage(ProductModel product) {
     final allImages = product.allImages;
     final imageUrl = allImages.isNotEmpty ? allImages.first : '';
-    final priceDisplay = product.hasDiscount
-        ? '\$${product.salePrice.toStringAsFixed(0)}'
-        : '\$${product.price.toStringAsFixed(0)}';
+    final priceDisplay = product.hasDiscount ? '\$${product.salePrice.toStringAsFixed(0)}' : '\$${product.price.toStringAsFixed(0)}';
 
     return '''Hello Admin, I would like to order this product:
 
@@ -72,7 +81,6 @@ Please let me know the next steps for payment and delivery!
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(productDetailsProvider);
-    final selectImage = ref.watch(selectItem);
 
     return Scaffold(
       backgroundColor: AppColors.instance.white50,
@@ -82,7 +90,7 @@ Please let me know the next steps for payment and delivery!
             : state.error != null
             ? _buildError(state.error!)
             : state.product != null
-            ? _buildContent(state.product!, selectImage)
+            ? _buildContent(state.product!)
             : _buildEmpty(),
       ),
     );
@@ -100,9 +108,7 @@ Please let me know the next steps for payment and delivery!
           ElevatedButton(
             onPressed: () {
               if (widget.productId != null) {
-                ref
-                    .read(productDetailsProvider.notifier)
-                    .getProductById(widget.productId!);
+                ref.read(productDetailsProvider.notifier).getProductById(widget.productId!);
               }
             },
             child: const AppText(text: 'Retry'),
@@ -116,7 +122,7 @@ Please let me know the next steps for payment and delivery!
     return const Center(child: AppText(text: 'No product found'));
   }
 
-  Widget _buildContent(ProductModel product, int selectImage) {
+  Widget _buildContent(ProductModel product) {
     final allImages = product.allImages;
 
     return CustomScrollView(
@@ -130,111 +136,81 @@ Please let me know the next steps for payment and delivery!
                 // ── Back button ───────────────────────────────────────────
                 GestureDetector(
                   onTap: () => AppRoutes.instance.pop(),
-                  child: AppImage(
-                    path: AppAssertsIconsPath.instance.arrowBack,
-                    height: 40,
-                    width: 40,
-                  ),
+                  child: AppImage(path: AppAssertsIconsPath.instance.arrowBack, height: 40, width: 40),
                 ),
                 Gap(height: 20),
 
                 // ── Image stack ───────────────────────────────────────────
-                Stack(
-                  children: [
-                    SizedBox(
-                      width: double.infinity,
-                      height: AppSize.height(value: 220),
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: AppColors.instance.grayContainer,
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: AppImage(
-                            isZomBle: true,
-                            url: allImages.isNotEmpty
-                                ? allImages[selectImage.clamp(
-                                    0,
-                                    allImages.length - 1,
-                                  )]
-                                : '',
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    // Thumbnail strip
-                    if (allImages.isNotEmpty)
-                      Positioned(
-                        left: 10,
-                        right: 10,
-                        bottom: 15,
-                        child: SizedBox(
-                          height: 50,
+                Consumer(
+                  builder: (context, ref, child) {
+                    final selectImage = ref.watch(selectItem);
+                    return Stack(
+                      children: [
+                        SizedBox(
+                          width: double.infinity,
+                          height: AppSize.height(value: 220),
                           child: DecoratedBox(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              itemCount: allImages.length,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 6,
-                                    vertical: 5,
-                                  ),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      ref
-                                          .read(selectItem.notifier)
-                                          .getItem(index);
-                                    },
-                                    child: DecoratedBox(
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: selectImage == index
-                                              ? AppColors.instance.primary
-                                              : Colors.transparent,
-                                          width: 3,
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(2),
-                                        child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(
-                                            6,
-                                          ),
-                                          child: AppImage(
-                                            width: 40,
-                                            url: allImages[index],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              },
+                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: AppColors.instance.grayContainer),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: AppImage(isZomBle: true, url: allImages.isNotEmpty ? allImages[selectImage.clamp(0, allImages.length - 1)] : ''),
                             ),
                           ),
                         ),
-                      ),
-                  ],
+
+                        // Thumbnail strip
+                        if (allImages.isNotEmpty)
+                          Positioned(
+                            left: 10,
+                            right: 10,
+                            bottom: 15,
+                            child: SizedBox(
+                              height: 50,
+                              child: DecoratedBox(
+                                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
+                                child: ListView.builder(
+                                  shrinkWrap: true,
+                                  scrollDirection: .horizontal,
+                                  itemCount: allImages.length,
+                                  itemBuilder: (context, index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          ref.read(selectItem.notifier).getItem(index);
+                                        },
+                                        child: DecoratedBox(
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                              color: selectImage == index ? AppColors.instance.primary : Colors.transparent,
+                                              width: 3,
+                                            ),
+                                            borderRadius: BorderRadius.circular(8),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(2),
+                                            child: ClipRRect(
+                                              borderRadius: .circular(6),
+                                              child: AppImage(width: 40, url: allImages[index]),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+                      ],
+                    );
+                  },
                 ),
 
                 Gap(height: 20),
 
                 // ── Product name ──────────────────────────────────────────
-                AppText(
-                  text: product.name,
-                  fontSize: 24,
-                  fontWeight: FontWeight.w600,
-                  isDynamic: true,
-                ),
+                AppText(text: product.name, fontSize: 24, fontWeight: FontWeight.w600, isDynamic: true),
 
                 Gap(height: 10),
 
@@ -252,29 +228,17 @@ Please let me know the next steps for payment and delivery!
                       ),
                       Gap(width: 10),
                     ],
-                    AppText(
-                      text: "\$${product.salePrice.toStringAsFixed(0)}",
-                      fontSize: 24,
-                      fontWeight: FontWeight.w500,
-                      isDynamic: true,
-                    ),
+                    AppText(text: "\$${product.salePrice.toStringAsFixed(0)}", fontSize: 24, fontWeight: FontWeight.w500, isDynamic: true),
                   ],
                 ),
 
                 Gap(height: 10),
 
                 // ── Description ───────────────────────────────────────────
-                AppText(
-                  text: "Product Details",
-                  fontSize: 24,
-                  fontWeight: FontWeight.w600,
-                  isDynamic: true,
-                ),
+                AppText(text: "Product Details", fontSize: 24, fontWeight: FontWeight.w600, isDynamic: true),
                 Gap(height: 10),
                 AppText(
-                  text: product.description?.isNotEmpty == true
-                      ? product.description!
-                      : 'No description available.',
+                  text: product.description?.isNotEmpty == true ? product.description! : 'No description available.',
                   fontSize: 16,
                   isDynamic: true,
                   fontWeight: FontWeight.w400,
@@ -292,18 +256,9 @@ Please let me know the next steps for payment and delivery!
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      AppImage(
-                        path: AppAssertsIconsPath.instance.callIcon,
-                        height: 30,
-                      ),
+                      AppImage(path: AppAssertsIconsPath.instance.callIcon, height: 30),
                       Gap(width: 10),
-                      AppText(
-                        text: "Chat to Order",
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white,
-                        isDynamic: true,
-                      ),
+                      AppText(text: "Chat to Order", fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white, isDynamic: true),
                     ],
                   ),
                 ),
