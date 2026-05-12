@@ -27,7 +27,7 @@ class AppApiUrl {
   String about = "/pages/type/ABOUT";
   String privacyPolicy = "/pages/type/PRIVACY_POLICY";
   String termsAndConditions = "/pages/type/TERMS_CONDITIONS";
-  String faq = "/pages/faqs"; 
+  String faq = "/pages/faqs";
   String notification = "/notification";
 
   // shop
@@ -36,14 +36,12 @@ class AppApiUrl {
 }
 
 String _getDomain() {
-  const String liveServer =
-      "http://yvx4wx0kqox6pyo91wsslyu8.147.93.107.217.sslip.io";
-  const String localServer = "http://10.10.7.8:6008";
+  const String liveServer = "https://alioorowbackend.mtscorporate.com";
+  const String localServer = "https://alioorowbackend.mtscorporate.com";
 
   try {
     if (kDebugMode) {
-      localServer;
-      // return localServer;
+      return localServer;
     }
   } catch (e) {
     errorLog("_getDomain", e);

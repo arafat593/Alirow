@@ -12,6 +12,7 @@ import 'package:flutter_riverpod_template/utils/app_size.dart';
 import 'package:flutter_riverpod_template/utils/gap.dart';
 import 'package:flutter_riverpod_template/widgets/app_image/app_image.dart';
 import 'package:flutter_riverpod_template/widgets/buttons/app_button.dart';
+import 'package:flutter_riverpod_template/widgets/texts/app_html_text.dart';
 import 'package:flutter_riverpod_template/widgets/texts/app_text.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -237,11 +238,11 @@ Please let me know the next steps for payment and delivery!
                 // ── Description ───────────────────────────────────────────
                 AppText(text: "Product Details", fontSize: 24, fontWeight: FontWeight.w600, isDynamic: true),
                 Gap(height: 10),
-                AppText(
-                  text: product.description?.isNotEmpty == true ? product.description! : 'No description available.',
-                  fontSize: 16,
+
+                AppHtmlWidget(
+                  html: product.description?.isNotEmpty == true ? product.description! : 'No description available.',
+                  textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black),
                   isDynamic: true,
-                  fontWeight: FontWeight.w400,
                 ),
 
                 Gap(height: 10),
