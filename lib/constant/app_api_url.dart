@@ -6,6 +6,7 @@ class AppApiUrl {
   static final AppApiUrl _instance = AppApiUrl._privateConstructor();
   static AppApiUrl get instance => _instance;
 
+  static final String apiHost = _getApiHost();
   static final String domain = _getDomain();
   static final String socket = _getDomain();
   final String baseUrl = "$domain/api/v1";
@@ -35,13 +36,18 @@ class AppApiUrl {
   String categories = "/categories";
 }
 
+String _getApiHost() {
+  return "yvx4wx0kqox6pyo91wsslyu8.147.93.107.217.sslip.io";
+}
+
 String _getDomain() {
-  const String liveServer = "https://alioorowbackend.mtscorporate.com";
-  const String localServer = "https://alioorowbackend.mtscorporate.com";
+  // const String liveServer = "https://alioorowbackend.mtscorporate.com";
+  const String liveServer = "http://147.93.107.217"; // Direct IP to bypass DNS issues
+  const String localServer = "http://10.10.7.8:6008";
 
   try {
     if (kDebugMode) {
-      return localServer;
+      // return localServer;
     }
   } catch (e) {
     errorLog("_getDomain", e);
