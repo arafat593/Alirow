@@ -7,12 +7,7 @@ class CustomSelectedOption extends StatelessWidget {
   final String title;
   final VoidCallback onTap;
   final bool isSelected;
-  const CustomSelectedOption({
-    super.key,
-    required this.title,
-    required this.onTap,
-    required this.isSelected,
-  });
+  const CustomSelectedOption({super.key, required this.title, required this.onTap, required this.isSelected});
 
   @override
   Widget build(BuildContext context) {
@@ -26,20 +21,9 @@ class CustomSelectedOption extends StatelessWidget {
           decoration: BoxDecoration(
             color: isSelected ? AppColors.instance.primary : Colors.white,
             borderRadius: BorderRadius.circular(25),
-            border: Border.all(
-              color: isSelected
-                  ? AppColors.instance.primary
-                  : AppColors.instance.green20,
-              width: 1.5,
-            ),
+            border: Border.all(color: isSelected ? AppColors.instance.primary : AppColors.instance.green20, width: 1.5),
             boxShadow: isSelected
-                ? [
-                    BoxShadow(
-                      color: AppColors.instance.primary.withOpacity(0.25),
-                      blurRadius: 8,
-                      offset: const Offset(0, 3),
-                    ),
-                  ]
+                ? [BoxShadow(color: AppColors.instance.primary.withValues(alpha: 0.25), blurRadius: 8, offset: const Offset(0, 3))]
                 : [],
           ),
           child: Padding(
@@ -50,9 +34,7 @@ class CustomSelectedOption extends StatelessWidget {
                 fontSize: AppSize.width(value: 15),
                 fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
                 isDynamic: true,
-                color: isSelected
-                    ? Colors.white
-                    : AppColors.instance.textBlack500,
+                color: isSelected ? Colors.white : AppColors.instance.textBlack500,
               ),
             ),
           ),

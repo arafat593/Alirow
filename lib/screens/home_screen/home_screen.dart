@@ -11,7 +11,6 @@ import 'package:flutter_riverpod_template/screens/home_screen/widgets/product_co
 import 'package:flutter_riverpod_template/screens/home_screen/widgets/filter_bottom_sheet.dart';
 import 'package:flutter_riverpod_template/utils/app_size.dart';
 import 'package:flutter_riverpod_template/utils/gap.dart';
-import 'package:flutter_riverpod_template/utils/languages/language_provider.dart';
 import 'package:flutter_riverpod_template/widgets/app_image/app_image.dart';
 import 'package:flutter_riverpod_template/widgets/texts/app_text.dart';
 

@@ -10,7 +10,7 @@ final splashProvider = AsyncNotifierProvider<SplashProvider, void>(() {
 class SplashProvider extends AsyncNotifier<void> {
   @override
   Future<void> build() async {
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 2));
     AppRoutes.instance.goNamed(AppRoutesKey.instance.onboardingScreen);
   }
 }

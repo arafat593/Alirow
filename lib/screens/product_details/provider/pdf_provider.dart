@@ -4,19 +4,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:share_plus/share_plus.dart';
 
 final pdfProvider = Provider((ref) => PdfService());
 
 class PdfService {
-
-  Future<File> generatePdf({
-    required String title,
-    required String price,
-    required String description,
-    required String imageUrl,
-  }) async {
-
+  Future<File> generatePdf({required String title, required String price, required String description, required String imageUrl}) async {
     final pdf = pw.Document();
 
     // image download
@@ -29,7 +21,6 @@ class PdfService {
           return pw.Column(
             crossAxisAlignment: pw.CrossAxisAlignment.start,
             children: [
-
               pw.Image(pw.MemoryImage(imageBytes), height: 200),
 
               pw.SizedBox(height: 20),
@@ -58,9 +49,6 @@ class PdfService {
   }
 
   Future<void> shareToWhatsApp(File file) async {
-    await Share.shareXFiles(
-      [XFile(file.path)],
-      text: "Hello, I want to order this product",
-    );
+    // await SharePlus.shareXFiles([XFile(file.path)], text: "Hello, I want to order this product");
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod_template/constant/app_colors.dart';
 import 'package:flutter_riverpod_template/utils/app_size.dart';
 import 'package:flutter_riverpod_template/utils/gap.dart';
 import 'package:flutter_riverpod_template/widgets/app_image/app_image.dart';
+import 'package:flutter_riverpod_template/widgets/texts/app_html_text.dart';
 import 'package:flutter_riverpod_template/widgets/texts/app_text.dart';
 
 class ProductContainer extends StatelessWidget {
@@ -11,85 +12,57 @@ class ProductContainer extends StatelessWidget {
   final String subtitle;
   final String? discountPrice;
   final String salePrice;
-  const ProductContainer({
-    super.key,
-    required this.title,
-    this.discountPrice,
-    required this.salePrice,
-    required this.subtitle,
-    required this.image,
-  });
+  const ProductContainer({super.key, required this.title, this.discountPrice, required this.salePrice, required this.subtitle, required this.image});
 
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        color: AppColors.instance.white50,
-      ),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: AppColors.instance.white50),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: DecoratedBox(
-          decoration: BoxDecoration(
-            color: AppColors.instance.white50,
-            borderRadius: BorderRadius.circular(8),
-          ),
+          decoration: BoxDecoration(color: AppColors.instance.white50, borderRadius: BorderRadius.circular(8)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(8),
-                child: AppImage(
-                  width: double.infinity,
-                  height: 110,
-                  url: image,
-                ),
+                child: AppImage(width: double.infinity, height: 110, url: image),
               ),
               Gap(height: 5),
               AppText(
                 text: title,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
                 fontSize: AppSize.width(value: 16),
                 fontWeight: FontWeight.w600,
                 color: Colors.black,
                 isDynamic: true,
               ),
-              AppText(
-                text: subtitle,
-                fontSize: AppSize.width(value: 12),
-                fontWeight: FontWeight.w400,
-                color: Colors.black,
+              AppHtmlWidget(
+                html: subtitle,
+                textStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.black),
                 isDynamic: true,
               ),
               Gap(height: 5),
               Row(
                 children: [
-                  AppText(
-                    text: "Price:",
-                    fontSize: AppSize.width(value: 16),
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
-                    isDynamic: true,
-                  ),
+                  AppText(text: "Price:", fontSize: AppSize.width(value: 16), fontWeight: FontWeight.w600, color: Colors.black, isDynamic: true),
                   Spacer(),
                   Column(
                     children: [
-                      AppText(
-                        text: discountPrice ?? "",
-                        fontSize: AppSize.width(value: 14),
-                        fontWeight: FontWeight.w400,
-                        color: Colors.red,
-                        decorationColor: Colors.red,
-                        decoration: TextDecoration.lineThrough,
-                        isDynamic: true,
-                      ),
-                      Gap(width: 5),
-                      AppText(
-                        text: salePrice,
-                        fontSize: AppSize.width(value: 16),
-                        fontWeight: FontWeight.w400,
-                        color: Colors.black,
-                        isDynamic: true,
-                      ),
+                      if ((discountPrice ?? "").isNotEmpty)
+                        AppText(
+                          text: discountPrice ?? "",
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.red,
+                          decorationColor: Colors.red,
+                          decoration: TextDecoration.lineThrough,
+                          isDynamic: true,
+                        ),
+                      if ((discountPrice ?? "").isNotEmpty) Gap(width: 5),
+                      AppText(text: salePrice, fontSize: 18, fontWeight: FontWeight.w600, color: Colors.black, isDynamic: true),
                     ],
                   ),
                 ],

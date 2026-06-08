@@ -10,7 +10,7 @@ class AppColors {
   final Color error = Color(0xFFFF3B28);
   final Color yellow = Color(0xFFFFBE00);
   final Color blue = Color(0xFF0051FF);
-  final Color green20 = Color(0xFF20a35314);
+  final Color green20 = Color(0xFF235314);
   final Color transparent = Colors.transparent;
 
   ////////////////  app gray color
@@ -73,7 +73,7 @@ class AppColors {
   final Color dark700 = const Color(0xff181818);
   final Color dark800 = const Color(0xff131313);
   final Color dark900 = const Color(0xff0e0e0e);
-  final Color dark2A  = const Color(0xff2A3730);
+  final Color dark2A = const Color(0xff2A3730);
 
   ////////////////  app Text black color
   final Color textBlack50 = Color(0xffebebeb);
